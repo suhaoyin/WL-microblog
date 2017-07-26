@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>WeiBo</title>
+	<!-- jquery -->
+	<script type="text/javascript" src="public/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/home/weibo.css">
+	<link rel="stylesheet" type="text/css" href="public/css/animate.css">
+	<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id="box">
+		<header>
+			<div class="headerContent container-fluid">
+				<div class="headerLogo col-xs-4">
+					<a href="#"></a>
+				</div>
+				<ul class="col-xs-8">
+					<li class="col-xs-2">首页</li>
+					<li class="col-xs-2">浏览</li>
+					<li class="col-xs-2">APP</li>
+					<li class="col-xs-2">ART</li>
+					<li class="col-xs-2">
+						<a href="#login" data-toggle="modal">
+							登录
+						</a>
+					</li>
+					<li class="col-xs-2">
+						<a href="#register" data-toggle="modal">
+							注册
+						</a>
+					</li>
+					
+				</ul>
+			</div>
+		</header>	
+		<div class="container">
+			<div class="col-xs-8 container-left">
+				<div class="row menu_box">
+					<div class="portrait_box col-xs-3">
+						<img class="portrait" src="{$headPic}" alt="">
+					</div>
+					<div class="col-xs-2 menu_tab">
+						<a href="#tab1" data-toggle="tab">
+							<span class="glyphicon glyphicon-pencil"></span>
+							文字
+						</a>
+					</div>
+					<div class="col-xs-2 menu_tab">
+						<a href="#tab2" data-toggle="tab">
+							<span class="glyphicon glyphicon-heart"></span>
+							图文
+						</a>
+					</div>
+					<div class="col-xs-2 menu_tab">
+						<a href="#tab3" data-toggle="tab">
+						<span class="glyphicon glyphicon-music"></span>
+						音乐</a>
+					</div>
+					<div class="col-xs-2 menu_tab">
+						<a href="#tab4" data-toggle="tab">
+							<span class="glyphicon glyphicon-film"></span>
+							视频
+						</a>
+					</div>
+				</div>
+				<form action="post_do.php" method="post">
+					<!-- bootstrap定义面板内容盒子的类 tab-content -->
+					<div class="tab-content">
+						<!-- 第一个面板是放文字发布框 -->
+						<!-- bootstrap定义选项卡内容盒子，具体的一个切换框的类是 tab-pane (panel) 
+						tab-pane 特点一：默认都是隐藏的，然后需要显示则加上active类即可
+								特点二：可以加动画，都加上fade类，然后给当前面板需加上in类
+					-->
+						<div class="tab-pane fade in active" id="tab1">
+							<textarea name="weibo_content" id="short_content" class="form-control" ></textarea>
+						</div>
+						<!-- 第二个面板是放图文发布框 -->
+						<div class="tab-pane fade" id="tab2">
+							<textarea name="weibo_content" id="pic_text" class="form-control" ></textarea>
+							<div class="file_style_div btn btn-info" >
+							<input type="file" id="pic_file" class="file_style">选择图片
+							</div>
+						</div>
+						
+						<div class="tab-pane fade" id="tab3">
+							<!--歌曲搜索框，keyup触发  -->
+							<input type="text" class="form-control" onkeyup="searchMusic(this)" placeholder="请用歌名、专辑或艺术家搜索！">
+							<ul class="music_list_box"></ul>
+							<div class="music_preview_box"></div>	
+							<div class="file_style_div btn btn-info" >
+								<input type="file" id="music_file" class="file_style">
+								选择本地音乐
+							</div>
+						</div>
+						<div class="tab-pane fade" id="tab4">
+							<div class="file_style_div btn btn-info" >
+							<input type="file" id="video_file" class="file_style">选择视频
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="type" value="short_content">
+					<input type="button" class="btn btn-info pull-right mt_20" value="发布" onclick="submit_weibo()">
+				</form>
+				<div class="clearfix"></div>
+				<!-- 动态列表盒子start -->
+				<div class="row">
+					<div>
+					
+						<!-- 动态列表布局：
+					获取已经存在的微博内容，把它们列出来
+					-->
+						<ul  class="list_box mt_20">
+							{foreach $weibo_list as $item}
+							<li class="clearfix">
+								<div class="col-xs-2">
+									<div class="img-frame hide_box">
+										<div class="img-fram-top">
+											<img src="{$item.userHeadPic|default:'/Internship/7-21/smarty/public/img/6632234347536656356.jpg'}" alt="">
+											{$item.weibo_num}
+										</div>
+										<div class="img-fram-mid"></div>
+									</div>
+									<img class="headLogo" src="{$item.userHeadPic|default:'/Internship/7-21/smarty/public/img/6632234347536656356.jpg'}" alt="">
+								</div>
+								<div class="sanjiao_box"></div>
+									<div class="col-xs-10 content_box">
+										
+										{if $item.type =='short_content'}
+										<div class="content_box_text">
+											{$item.weibo_content}
+										</div>
+											{elseif $item.type =='music'}
+												<audio src="{$item.music}" controls></audio>
+												{elseif $item.type == 'pic_text'}
+												<div class="content_box_text">
+													{$item.weibo_content}
+												</div>
+												<img class="content_box_img" src="{$item.pic}" alt="">
+													{else $item.type == 'video'}
+													<video style="width:100%" src="{$item.video}" controls></video>
+										{/if}	
+									</div>
+							</li>
+									<div id="comment_box">
+										<div class="mananga_box">
+											{if $uid == $item.uid}	
+											<a href="#edit_box" data-toggle="modal" data-weiboType="{$item.type}"data-music="{$item.music}"data-video="{$item.video}"data-pic="{$item.pic}" data-shortContent="{$item.weibo_content}" class="edit_weibo">编辑</a>
+											<a href="#modal_box" data-toggle="modal" class="del_weibo">删除</a>
+											{/if}
+											<a class="commont_btn" data-num="{$item.num}" data-id="{$item.id}">评论(<span class="num_val_box">{$item.num}</span>)</a>
+											
+										</div>
+										<div class="commont_form_box hide_box">
+											<textarea name=""  class="commont_texarea"  style="width:100%"></textarea>
+											<input type="button" class="btn btn-default send_commont" data-id="{$item.id}" value="发布评论">
+											<ul class="commont_list">
+											
+											</ul>
+										</div>
+									</div>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4 container-right">
+				<dl class="login-info">
+					<dt>
+						{if $user_name}
+						<b>
+							Hello,{$user_name}!
+						</b>
+						{else}
+						<b>登陆有惊喜哟！</b>
+						{/if}
+					</dt>  
+					<dd>
+						<a href="#upLoadHeadpic" data-toggle="modal">
+							设置头像
+						</a>
+					</dd>
+					<dd onclick="loginOut()">退出</dd>
+				</dl>
+			</div>
+			
+
+			
+			<!-- 动态列表盒子end -->
+		</div>
+		<!--编辑模态框  -->
+		<div class="modal fade" id="edit_box">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- 顶部 -->
+					<div class="modal-header">
+						编辑
+					</div>
+					<div class="modal-body">
+						<div  class="form-group">
+							
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-info" onclick="submitEditWeiBo()">
+							提交
+						</button>
+						<button class="btn btn-default" data-dismiss="modal">
+							取消
+						</button>
+						
+					</div>
+				</div>
+			</div>		
+		</div>
+			<!-- 删除模态框模态框 -->
+		<div class="modal fade" id="modal_box">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- 顶部 -->
+					<div class="modal-header">删除信息</div>
+					<!-- body -->
+					<div class="modal-body">确定删除这条信息吗？</div>
+					<!-- 底部 -->
+					<div class="modal-footer">
+						<button class="btn btn-info" onclick="deleteWeiBO()">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--注册模态框  -->
+		<div class="modal fade" id="register">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- 顶部 -->
+					<div class="modal-header">
+						欢迎注册
+					</div>
+					<div class="modal-body">
+						<div  class="form-group">
+							<label for="ruser_name">Telphone</label>
+							<input type="text" id="ruser_name" class="form-control" placeholder="请输入手机号码">
+							<label for="ruser_pwd">Password</label>
+							<input type="text" id="ruser_pwd" class="form-control" placeholder="请输入密码">
+							<label for="ruser_pwdagain">Again</label>
+							<input type="text" id="ruser_pwdagain" class="form-control" placeholder="请再次输入密码">
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-info" onclick="register()">
+							注册
+						</button>
+						<button class="btn btn-default" data-dismiss="modal">
+							取消
+						</button>
+						
+					</div>
+				</div>
+			</div>		
+		</div>
+		<!--登录模态框  -->
+		<div class="modal fade" id="login">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<!-- 顶部 -->
+					<div class="modal-header">
+						欢迎登录
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="luser_name">Telphone</label>
+							<input type="text" id="luser_name" class="form-control" placeholder="请输入手机号码">
+							<label for="luser_pwd">Password</label>
+							<input type="text" id="luser_pwd" class="form-control" placeholder="请输入密码">
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-info" onclick="login()">
+							登录
+						</button>
+						<button class="btn btn-default" data-dismiss="modal">
+							取消
+						</button>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--设置头像模态框  -->
+		<div class="modal fade" id="upLoadHeadpic">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- 顶部 -->
+					<div class="modal-header">
+						设置头像
+					</div>
+					<div class="modal-body">
+						<div class="file_style_div btn btn-info">
+							<input type="file" id="headPic_file" class="file_style">
+							选择图片
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-info" onclick="upLoadHeadpic()">
+							上传
+						</button>
+						<button class="btn btn-default" data-dismiss="modal">
+							取消
+						</button>	
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+<script type="text/javascript" src="public/js/weibo.js"></script>
+			
+</body>
+</html>

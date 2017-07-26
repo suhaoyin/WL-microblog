@@ -1,0 +1,239 @@
+body{background-color: #EDEDEF}
+*{margin: 0;padding: 0;list-style: none;}
+.menu_box{
+    margin-bottom:28px;
+}
+#box{
+	background-color: #EDEDEF;
+}
+.hide_box{
+    display: none;
+}
+/*头部样式*/
+header{
+	min-width: 928px;
+	margin: 0 auto;
+	height: 82px;
+	background-color: #483f3f;
+}
+.headerContent{
+	width: 928px;
+}
+.headerContent .headerLogo{
+    text-align: center;
+}
+.headerContent .headerLogo a{
+	width: 220px;
+	display: inline-block;
+	background: url(../img/hdlogo_2x.png) no-repeat;
+	background-size: auto 100%;
+	height: 44px;
+	margin-top:19px ;
+	text-align: center; 	
+}
+.headerContent ul {
+	margin-top:30px ;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+.container{
+    width: 928px;
+    margin: 0 auto;
+}
+/*以col-lg开头的*/
+.menu_box [class^="col-xs"]{
+    border: 1px solid #eee; 
+    font-size: 20px; color: #f58384;
+     text-align: center;
+      padding: 30px 0;
+ }
+.menu_box{
+    margin-top:20px; 
+}
+.portrait{
+    display: inline-block;
+    border-radius: 50%;
+    /* margin: 0 100px; */
+}
+.tab-content{
+    width: 90%;
+    margin: 0 auto;
+    height: 100px;
+}
+.mt_20{
+    clear:both;
+    margin-right:5%; 
+    margin-bottom:20px;  
+}
+/*列表的样式*/
+.list_box {
+    /* overflow: hidden; */
+}
+.list_box .col-xs-2{
+    position: relative;
+}
+.img-frame{
+    width: 300px;
+    height: 180px;
+    z-index:10;
+    position: absolute;
+     background-color: #ccc; 
+    border: 1px solid black;
+    top: -190px;
+    left: -35px;
+} 
+.img-frame:after {  
+    border: solid;
+    content: ' ';
+     height: 10px; 
+    position: absolute;
+     width: 10px; 
+} 
+
+.img-frame:after {
+    left: 25%;
+    top: 100%;
+    border-width: 10px;
+    border-color: transparent;
+    border-top-color: blue;
+}
+.list_box img.headLogo{
+    width:64px;
+    height: 64px;
+    z-index: 1000;
+    border-radius:50%;
+}
+.list_box li .content_box{
+    background-color: #fff; 
+    box-shadow: 1px 1px 6px #ccc;
+      min-height: 280px;
+     max-height: 400px; 
+     /* height: 400px; */
+     overflow: hidden;
+     padding-top: 15px; 
+}
+.list_box li{
+    position: relative;
+}
+/* 评论样式 */
+.content_box_text{
+    width: 90%;
+    max-height: 50%;
+    margin: 0 auto;
+}
+.content_box_img{
+    display: inline-block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.sanjiao_box{
+    width: 0; 
+    height: 0; 
+    border-top: none;
+    border-bottom: 23px solid transparent; 
+    border-right: 30px solid white;
+    border-left: none; 
+    position: absolute;
+    top: 0px;
+    left: 81px;
+    z-index: 9;
+ }
+#comment_box{
+    padding-left:17%; 
+    margin-bottom:20px;
+    margin-top: 5px; 
+}
+.mananga_box{
+    margin-left: 60%;
+}
+.mananga_box a{
+    margin: 0 10px;
+}
+.mananga_box a:hover{
+    cursor: pointer; 
+}
+.del_commont{
+    margin-right:5%; 
+}
+.del_commont:hover{
+    cursor: pointer;
+}
+
+/* login-info */
+.login-info{
+    margin-top:30px; 
+    border: 1px solid #E7E7E7;
+    background-color: #E7E7E7;
+}
+.login-info dt,.login-info dd{
+    text-align: center;
+    border-right: 1px solid #dfdfdf;
+    padding: 10px;
+    margin: 10px;
+    background-color:#F3F3F3;
+}
+.login-info a{
+    color: black;
+}
+.login-info dt:hover,.login-info dd:hover {
+    color: #7594B3;
+    cursor: pointer;
+    background-color: #fff;
+}
+.file_style_div{
+    position: relative;
+    margin-top:20px; 
+}
+.file_style{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110px;
+    height: 34px;
+}
+.portrait{
+    width: 100px;
+    height: 100px;
+}
+
+/*音乐搜索样式  */
+#tab3{
+    position: relative;
+}
+.music_list_box{
+    display: none;
+    position: absolute;
+    z-index: 100;
+    width: 300px;
+    top: 40px;
+    left: 25%;
+    background-color: rgba(230,230,230,.5);
+    border-radius: 10px;
+}
+.music_list_box li{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color:  #E7E7E7;
+    border: 1px solid #E7E7E7;
+    text-align: center;
+}
+.music_list_box li:hover{
+    background-color: #999999;
+}
+.music_preview_box{
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 25%;
+    border: 1px solid red;
+    z-index: 150;
+}
+.music_preview_box img{
+    width: 88px;
+}
